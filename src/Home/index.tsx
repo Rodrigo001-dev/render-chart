@@ -14,6 +14,16 @@ export function Home() {
   const [month, setMonth] = useState<MonthsProps>("Janeiro");
   const [data, setData] = useState<CardProps[]>([]);
 
+  function handleCardOnPress(id: string) {
+    // prev(pegando o estado anterior)
+    // se o meu estado anterior(prev) for igual ao id eu vou desmarcar todos os
+    // itens
+    // isso vai fazer com que quando o usuário clicar na mesma fatia que já
+    // tinha clicado o estado vai voltar a ser uma string vazia para mostrar que
+    // nada está selecionado caso contrario eu vou marcar um novo id(id da categoria que vai estar selecionado)
+    setSelected(prev => prev === id ? "" : id);
+  };
+
   useEffect(() => {
     setData(EXPENSES[month]);
   }, [month]);
@@ -33,6 +43,21 @@ export function Home() {
           y="value"
           colorScale={data.map(expense => expense.color)}
           innerRadius={80}
+          style={{
+            labels: {
+             fill: 'red'
+            },
+            data: {
+              // datum(cada categoria do chart)
+              // se ele for a categoria que esta selecionada ou se nenhum esta
+              // selecionado então todos ficam com 1 de opacidade ou somente o
+              // que esta ativo fica com 1 de opacidade caso contrario fica com
+              // 50%
+              fillOpacity: ({ datum }) => (datum.id === selected || selected === "") ? 1 : 0.5,
+              // pegando a cor de cada fatia
+              // stroke: ({ datum }) => datum.color,
+            },
+          }}
         />
       </Chart>
 
@@ -43,6 +68,7 @@ export function Home() {
           <Card
             data={item}
             selected={false}
+            onPress={() => handleCardOnPress(item.id)}
           />
         )}
         showsVerticalScrollIndicator={false}
