@@ -43,11 +43,17 @@ export function Home() {
           y="value"
           colorScale={data.map(expense => expense.color)}
           innerRadius={80}
+          padAngle={3}
+          animate={{
+            duration: 2000,
+            easing: "bounce"
+          }}
           style={{
             labels: {
-             fill: 'red'
+             fill: '#FFF'
             },
             data: {
+              // datum é uma propriedade do próprio chart
               // datum(cada categoria do chart)
               // se ele for a categoria que esta selecionada ou se nenhum esta
               // selecionado então todos ficam com 1 de opacidade ou somente o
@@ -55,9 +61,20 @@ export function Home() {
               // 50%
               fillOpacity: ({ datum }) => (datum.id === selected || selected === "") ? 1 : 0.5,
               // pegando a cor de cada fatia
-              // stroke: ({ datum }) => datum.color,
+              stroke: ({ datum }) => datum.id === selected ? datum.color: 'none',
+              strokeOpacity: 0.5,
+              strokeWidth: 10
             },
           }}
+          labelComponent={
+            <VictoryTooltip 
+              renderInPortal={false}
+              flyoutStyle={{
+                stroke: 0,
+                fill: ({ datum }) => datum.color
+              }}
+            />
+          }
         />
       </Chart>
 
