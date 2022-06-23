@@ -14,6 +14,10 @@ export function Home() {
   const [month, setMonth] = useState<MonthsProps>("Janeiro");
   const [data, setData] = useState<CardProps[]>([]);
 
+  useEffect(() => {
+    setData(EXPENSES[month]);
+  }, [month]);
+
   return (
     <Container>
       <Header
@@ -22,7 +26,14 @@ export function Home() {
       />
 
       <Chart>
-        <VictoryPie />
+        {/* x=label y=value */}
+        <VictoryPie 
+          data={data}
+          x="label"
+          y="value"
+          colorScale={data.map(expense => expense.color)}
+          innerRadius={80}
+        />
       </Chart>
 
       <FlatList

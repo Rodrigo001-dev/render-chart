@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "render-graphics",
-    "slug": "render-graphics",
+    "name": "render-chart",
+    "slug": "render-chart",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
